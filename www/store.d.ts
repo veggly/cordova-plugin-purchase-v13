@@ -337,7 +337,7 @@ declare namespace CdvPurchase {
             has(receipt: Receipt): boolean;
         }
         interface ValidatorController {
-            validator: string | Validator.Function | Validator.Tar| undefined;
+            validator: string | Validator.Function | Validator.Target | undefined;
             localReceipts: Receipt[];
             adapters: Adapters;
             validator_privacy_policy: PrivacyPolicyItem | PrivacyPolicyItem[] | undefined;
@@ -363,7 +363,7 @@ declare namespace CdvPurchase {
             incrResponsesCounter(): void;
             /** Add/update a verified receipt from the server response */
             addVerifiedReceipt(receipt: Receipt, data: Validator.Response.SuccessPayload['data']): VerifiedReceipt;
-            /** Add a receipt to the validation queue. It'll validated after a few milliseconds. */
+            /** Add a receipt to the validation queue. It'll get validated after a few milliseconds. */
             add(receiptOrTransaction: Receipt | Transaction): void;
             /** Run validation for all receipts in the queue */
             run(): void;
@@ -783,7 +783,7 @@ declare namespace CdvPurchase {
         /** Return the identifier of the user for your application */
         applicationUsername?: string | (() => string | undefined);
         /**
-         * the application username as a string by either calling or returning {@link Store.applicationUsername}
+         * Get the application username as a string by either calling or returning {@link Store.applicationUsername}
         */
         getApplicationUsername(): string | undefined;
         /**
@@ -810,7 +810,7 @@ declare namespace CdvPurchase {
          *
          * @see {@link CdvPurchase.Validator.Response.Payload}
          */
-        validator: string | Validator.Function | Validator.Tar| undefined;
+        validator: string | Validator.Function | Validator.Target | undefined;
         /**
          * When adding information to receipt validation requests, those can serve different functions:
          *
@@ -1144,7 +1144,7 @@ declare namespace CdvPurchase {
     interface PricingPhase {
         /** Price formatted for humans */
         price: string;
-        /** Price in micro-units (divide by 1000000 to numeric price) */
+        /** Price in micro-units (divide by 1000000 to get numeric price) */
         priceMicros: number;
         /** Currency code */
         currency?: string;
@@ -1343,13 +1343,13 @@ declare namespace CdvPurchase {
          * of your products. When you have a receipt validation server in place, a better option is to
          * use the sister method "receiptsVerified".
          *
-         * If no platforms have any receipts (the user made no purchase), this will also called.
+         * If no platforms have any receipts (the user made no purchase), this will also get called.
          */
         receiptsReady(cb: Callback<void>, callbackName?: string): When;
         /**
          * Register a function called when all receipts have been verified.
          *
-         * If no platforms have any receipts (user made no purchase), this will also called.
+         * If no platforms have any receipts (user made no purchase), this will also get called.
          */
         receiptsVerified(cb: Callback<void>, callbackName?: string): When;
     }
@@ -2366,7 +2366,7 @@ declare namespace CdvPurchase {
          *
          * @param applicationReceipt An apple appstore receipt
          * @param requests List of discount offers to evaluate eligibility for
-         * @param callback the response, a boolean for each request (matched by index).
+         * @param callback Get the response, a boolean for each request (matched by index).
          */
         type DiscountEligibilityDeterminer = ((applicationReceipt: ApplicationReceipt, requests: DiscountEligibilityRequest[], callback: (response: boolean[]) => void) => void) & {
             cacheReceipt?: (receipt: VerifiedReceipt) => void;
@@ -2380,7 +2380,7 @@ declare namespace CdvPurchase {
              *
              * @param applicationReceipt An apple appstore receipt
              * @param requests List of discount offers to evaluate eligibility for
-             * @param callback the response, a boolean for each request (matched by index).
+             * @param callback Get the response, a boolean for each request (matched by index).
              */
             discountEligibilityDeterminer?: DiscountEligibilityDeterminer;
             /**
@@ -5223,7 +5223,7 @@ declare namespace CdvPurchase {
              *  - When a subscription is Canceled, the expirationTime will be updated with the date and time of the cancellation.
              *  - The ID of the subscription will remain the same during its entire lifetime. It will not change if the auto-renew option is turned on or off. If a user repurchases a subscription after reaching a terminal state, a new subscription ID will be created.
              *  - The ID of a subscription should be used to execute any operation on an individual subscription.
-             *  - When a user repurchases a subscription after cancelling or discontinuing it, if you query the results for the user you will two entries: one with the old subscription ID in a terminal state, and one with the new subscription ID in an active state.
+             *  - When a user repurchases a subscription after cancelling or discontinuing it, if you query the results for the user you will get two entries: one with the old subscription ID in a terminal state, and one with the new subscription ID in an active state.
              *  - It's always a good practice to check both recurrenceState and expirationTime, since updates to recurrenceState can potentially be delayed by a few minutes (or occasionally hours).
              */
             recurrenceState: "None" | "Active" | "Inactive" | "Canceled" | "InDunning" | "Failed";
@@ -5699,7 +5699,7 @@ declare namespace CdvPurchase {
         /**
          * Custom definition of the validation request target.
          */
-        interface Tar{
+        interface Target {
             /** URL of the receipt validator */
             url: string;
             /** Custom headers */
@@ -5760,7 +5760,7 @@ declare namespace CdvPurchase {
          * Id of the product that have been validated. Used internally.
          */
         id: string;
-        /** raw response data from the receipt validation request */
+        /** Get raw response data from the receipt validation request */
         raw(): Validator.Response.SuccessPayload['data'];
         /**
          * @internal
