@@ -119,7 +119,7 @@ declare namespace CdvPurchase {
          *   }
          * ]);
          */
-        get braintreeClientTokenProvider(): Braintree.ClientTokenProvider;
+        braintreeClientTokenProvider(): Braintree.ClientTokenProvider;
         /**
          * Determine the eligibility of discounts based on the content of the application receipt.
          *
@@ -129,9 +129,9 @@ declare namespace CdvPurchase {
          * Receipt validation is expected to happen after loading product information, so the implementation here is to
          * wait for a validation response.
          */
-        get appStoreDiscountEligibilityDeterminer(): AppleAppStore.DiscountEligibilityDeterminer;
+        appStoreDiscountEligibilityDeterminer(): AppleAppStore.DiscountEligibilityDeterminer;
         /** Validator URL */
-        get validator(): string;
+        validator(): string;
     }
 }
 declare namespace CdvPurchase {
@@ -276,15 +276,15 @@ declare namespace CdvPurchase {
          *
          * Useful when you know products have a single offer and a single pricing phase.
          */
-        get pricing(): PricingPhase | undefined;
+        pricing(): PricingPhase | undefined;
         /**
          * Returns true if the product can be purchased.
          */
-        get canPurchase(): boolean;
+        canPurchase(): boolean;
         /**
          * Returns true if the product is owned.
          */
-        get owned(): boolean;
+        owned(): boolean;
         /** @internal */
         constructor(p: IRegisterProduct, decorator: Internal.ProductDecorator);
         /**
@@ -330,14 +330,14 @@ declare namespace CdvPurchase {
         /** Queue of receipts to validate */
         class ReceiptsToValidate {
             private array;
-            get length(): number;
+            length(): number;
             get(): Receipt[];
             add(receipt: Receipt): void;
             clear(): void;
             has(receipt: Receipt): boolean;
         }
         interface ValidatorController {
-            validator: string | Validator.Function | Validator.Target | undefined;
+            validator: string | Validator.Function | Validator.Tar| undefined;
             localReceipts: Receipt[];
             adapters: Adapters;
             validator_privacy_policy: PrivacyPolicyItem | PrivacyPolicyItem[] | undefined;
@@ -363,7 +363,7 @@ declare namespace CdvPurchase {
             incrResponsesCounter(): void;
             /** Add/update a verified receipt from the server response */
             addVerifiedReceipt(receipt: Receipt, data: Validator.Response.SuccessPayload['data']): VerifiedReceipt;
-            /** Add a receipt to the validation queue. It'll get validated after a few milliseconds. */
+            /** Add a receipt to the validation queue. It'll validated after a few milliseconds. */
             add(receiptOrTransaction: Receipt | Transaction): void;
             /** Run validation for all receipts in the queue */
             run(): void;
@@ -783,7 +783,7 @@ declare namespace CdvPurchase {
         /** Return the identifier of the user for your application */
         applicationUsername?: string | (() => string | undefined);
         /**
-         * Get the application username as a string by either calling or returning {@link Store.applicationUsername}
+         * the application username as a string by either calling or returning {@link Store.applicationUsername}
         */
         getApplicationUsername(): string | undefined;
         /**
@@ -810,7 +810,7 @@ declare namespace CdvPurchase {
          *
          * @see {@link CdvPurchase.Validator.Response.Payload}
          */
-        validator: string | Validator.Function | Validator.Target | undefined;
+        validator: string | Validator.Function | Validator.Tar| undefined;
         /**
          * When adding information to receipt validation requests, those can serve different functions:
          *
@@ -908,7 +908,7 @@ declare namespace CdvPurchase {
          */
         ready(cb: Callback<void>): void;
         /** true if the plugin is initialized and ready */
-        get isReady(): boolean;
+        isReady(): boolean;
         /**
          * Setup events listener.
          *
@@ -943,7 +943,7 @@ declare namespace CdvPurchase {
          *
          * Products are active if their details have been successfully loaded from the store.
          */
-        get products(): Product[];
+        products(): Product[];
         /**
          * Find a product from its id and platform
          *
@@ -954,19 +954,19 @@ declare namespace CdvPurchase {
         /**
          * List of all receipts present on the device.
          */
-        get localReceipts(): Receipt[];
+        localReceipts(): Receipt[];
         /** List of all transaction from the local receipts. */
-        get localTransactions(): Transaction[];
+        localTransactions(): Transaction[];
         /**
          * List of receipts verified with the receipt validation service.
          *
          * Those receipt contains more information and are generally more up-to-date than the local ones.
          */
-        get verifiedReceipts(): VerifiedReceipt[];
+        verifiedReceipts(): VerifiedReceipt[];
         /**
          * List of all purchases from the verified receipts.
          */
-        get verifiedPurchases(): VerifiedPurchase[];
+        verifiedPurchases(): VerifiedPurchase[];
         /**
          * Find the last verified purchase for a given product, from those verified by the receipt validator.
          */
@@ -1144,7 +1144,7 @@ declare namespace CdvPurchase {
     interface PricingPhase {
         /** Price formatted for humans */
         price: string;
-        /** Price in micro-units (divide by 1000000 to get numeric price) */
+        /** Price in micro-units (divide by 1000000 to numeric price) */
         priceMicros: number;
         /** Currency code */
         currency?: string;
@@ -1343,13 +1343,13 @@ declare namespace CdvPurchase {
          * of your products. When you have a receipt validation server in place, a better option is to
          * use the sister method "receiptsVerified".
          *
-         * If no platforms have any receipts (the user made no purchase), this will also get called.
+         * If no platforms have any receipts (the user made no purchase), this will also called.
          */
         receiptsReady(cb: Callback<void>, callbackName?: string): When;
         /**
          * Register a function called when all receipts have been verified.
          *
-         * If no platforms have any receipts (user made no purchase), this will also get called.
+         * If no platforms have any receipts (user made no purchase), this will also called.
          */
         receiptsVerified(cb: Callback<void>, callbackName?: string): When;
     }
@@ -1422,13 +1422,13 @@ declare namespace CdvPurchase {
         /** Offer identifier */
         id: string;
         /** Identifier of the product related to this offer */
-        get productId(): string;
+        productId(): string;
         /** Type of the product related to this offer */
-        get productType(): ProductType;
+        productType(): ProductType;
         /** Group the product related to this offer is member of */
-        get productGroup(): string | undefined;
+        productGroup(): string | undefined;
         /** Platform this offer is available from */
-        get platform(): Platform;
+        platform(): Platform;
         /** Pricing phases */
         pricingPhases: PricingPhase[];
         /**
@@ -1441,7 +1441,7 @@ declare namespace CdvPurchase {
         /**
          * true if the offer can be purchased.
          */
-        get canPurchase(): boolean;
+        canPurchase(): boolean;
         /** @internal */
         constructor(options: {
             id: string;
@@ -1733,7 +1733,7 @@ declare namespace CdvPurchase {
         /**
          * Return the receipt this transaction is part of.
          */
-        get parentReceipt(): Receipt;
+        parentReceipt(): Receipt;
         /** @internal */
         constructor(platform: Platform, parentReceipt: Receipt, decorator: Internal.TransactionDecorator);
     }
@@ -2366,7 +2366,7 @@ declare namespace CdvPurchase {
          *
          * @param applicationReceipt An apple appstore receipt
          * @param requests List of discount offers to evaluate eligibility for
-         * @param callback Get the response, a boolean for each request (matched by index).
+         * @param callback the response, a boolean for each request (matched by index).
          */
         type DiscountEligibilityDeterminer = ((applicationReceipt: ApplicationReceipt, requests: DiscountEligibilityRequest[], callback: (response: boolean[]) => void) => void) & {
             cacheReceipt?: (receipt: VerifiedReceipt) => void;
@@ -2380,7 +2380,7 @@ declare namespace CdvPurchase {
              *
              * @param applicationReceipt An apple appstore receipt
              * @param requests List of discount offers to evaluate eligibility for
-             * @param callback Get the response, a boolean for each request (matched by index).
+             * @param callback the response, a boolean for each request (matched by index).
              */
             discountEligibilityDeterminer?: DiscountEligibilityDeterminer;
             /**
@@ -2420,14 +2420,14 @@ declare namespace CdvPurchase {
             forceReceiptReload: boolean;
             /** List of products loaded from AppStore */
             _products: SKProduct[];
-            get products(): Product[];
+            products(): Product[];
             /** Find a given product from ID */
             getProduct(id: string): SKProduct | undefined;
             /** The application receipt, contains all transactions */
             _receipt?: SKApplicationReceipt;
             /** The pseudo receipt stores purchases in progress */
             pseudoReceipt: Receipt;
-            get receipts(): Receipt[];
+            receipts(): Receipt[];
             private validProducts;
             addValidProducts(registerProducts: IRegisterProduct[], validProducts: Bridge.ValidProduct[]): void;
             bridge: Bridge.Bridge;
@@ -2443,7 +2443,7 @@ declare namespace CdvPurchase {
             onRestoreCompleted?: (code: IError | undefined) => void;
             constructor(context: CdvPurchase.Internal.AdapterContext, options: AdapterOptions);
             /** Returns true on iOS, the only platform supported by this adapter */
-            get isSupported(): boolean;
+            isSupported(): boolean;
             private upsertTransactionInProgress;
             /** Remove a transaction from the pseudo receipt */
             private removeTransactionInProgress;
@@ -3242,14 +3242,14 @@ declare namespace CdvPurchase {
             ready: boolean;
             products: Product[];
             _receipts: BraintreeReceipt[];
-            get receipts(): Receipt[];
+            receipts(): Receipt[];
             private context;
             log: Logger;
             iosBridge?: IosBridge.Bridge;
             androidBridge?: AndroidBridge.Bridge;
             options: AdapterOptions;
             constructor(context: Internal.AdapterContext, options: AdapterOptions);
-            get isSupported(): boolean;
+            isSupported(): boolean;
             supportsParallelLoading: boolean;
             /**
              * Initialize the Braintree Adapter.
@@ -4171,9 +4171,9 @@ declare namespace CdvPurchase {
             ready: boolean;
             supportsParallelLoading: boolean;
             /** List of products managed by the GooglePlay adapter */
-            get products(): GProduct[];
+            products(): GProduct[];
             private _products;
-            get receipts(): Receipt[];
+            receipts(): Receipt[];
             private _receipts;
             /** The GooglePlay bridge */
             bridge: Bridge.Bridge;
@@ -4189,7 +4189,7 @@ declare namespace CdvPurchase {
             constructor(context: Internal.AdapterContext, autoRefreshIntervalMillis?: number);
             private initializationPromise?;
             /** Returns true on Android, the only platform supported by this adapter */
-            get isSupported(): boolean;
+            isSupported(): boolean;
             initialize(): Promise<undefined | IError>;
             /** Prepare the list of SKUs sorted by type */
             getSkusOf(products: IRegisterProduct[]): {
@@ -4993,7 +4993,7 @@ declare namespace CdvPurchase {
             private context;
             private log;
             constructor(context: Internal.AdapterContext);
-            get isSupported(): boolean;
+            isSupported(): boolean;
             supportsParallelLoading: boolean;
             initialize(): Promise<IError | undefined>;
             loadReceipts(): Promise<Receipt[]>;
@@ -5132,7 +5132,7 @@ declare namespace CdvPurchase {
             products: Product[];
             receipts: Receipt[];
             initialize(): Promise<IError | undefined>;
-            get isSupported(): boolean;
+            isSupported(): boolean;
             loadProducts(products: IRegisterProduct[]): Promise<(Product | IError)[]>;
             loadReceipts(): Promise<Receipt[]>;
             order(offer: Offer): Promise<undefined | IError>;
@@ -5223,7 +5223,7 @@ declare namespace CdvPurchase {
              *  - When a subscription is Canceled, the expirationTime will be updated with the date and time of the cancellation.
              *  - The ID of the subscription will remain the same during its entire lifetime. It will not change if the auto-renew option is turned on or off. If a user repurchases a subscription after reaching a terminal state, a new subscription ID will be created.
              *  - The ID of a subscription should be used to execute any operation on an individual subscription.
-             *  - When a user repurchases a subscription after cancelling or discontinuing it, if you query the results for the user you will get two entries: one with the old subscription ID in a terminal state, and one with the new subscription ID in an active state.
+             *  - When a user repurchases a subscription after cancelling or discontinuing it, if you query the results for the user you will two entries: one with the old subscription ID in a terminal state, and one with the new subscription ID in an active state.
              *  - It's always a good practice to check both recurrenceState and expirationTime, since updates to recurrenceState can potentially be delayed by a few minutes (or occasionally hours).
              */
             recurrenceState: "None" | "Active" | "Inactive" | "Canceled" | "InDunning" | "Failed";
@@ -5699,7 +5699,7 @@ declare namespace CdvPurchase {
         /**
          * Custom definition of the validation request target.
          */
-        interface Target {
+        interface Tar{
             /** URL of the receipt validator */
             url: string;
             /** Custom headers */
@@ -5732,7 +5732,7 @@ declare namespace CdvPurchase {
         /** Date and time the receipt was verified */
         validationDate: Date;
         /** Platform this receipt originated from */
-        get platform(): Platform;
+        platform(): Platform;
         /** Source local receipt used for this validation */
         sourceReceipt: Receipt;
         /**
@@ -5760,8 +5760,8 @@ declare namespace CdvPurchase {
          * Id of the product that have been validated. Used internally.
          */
         id: string;
-        /** Get raw response data from the receipt validation request */
-        get raw(): Validator.Response.SuccessPayload['data'];
+        /** raw response data from the receipt validation request */
+        raw(): Validator.Response.SuccessPayload['data'];
         /**
          * @internal
          */
