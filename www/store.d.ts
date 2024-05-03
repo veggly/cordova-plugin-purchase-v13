@@ -2586,7 +2586,7 @@ declare namespace CdvPurchase {
             /**
              * A receipt returned by the native side.
              */
-            type RawReceiptArgs = [
+            export type RawReceiptArgs = [
                 base64: string,
                 bundleIdentifier: string,
                 bundleShortVersion: string,
