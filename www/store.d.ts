@@ -2586,12 +2586,12 @@ declare namespace CdvPurchase {
             /**
              * A receipt returned by the native side.
              */
-            export type RawReceiptArgs = [
-                base64: string,
-                bundleIdentifier: string,
-                bundleShortVersion: string,
-                bundleNumericVersion: number,
-                bundleSignature: string
+            type RawReceiptArgs = [
+                'base64',
+                'bundleIdentifier',
+                'bundleShortVersion',
+                'bundleNumericVersion',
+                'bundleSignature'
             ];
             export interface BridgeCallbacks {
                 error: (code: ErrorCode, message: string, options?: {
