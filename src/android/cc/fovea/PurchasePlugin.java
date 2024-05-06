@@ -313,7 +313,11 @@ public final class PurchasePlugin
         callError(Constants.ERR_SETUP,
             "Setup failed. " + format(getLastResult()));
       }
-    });
+    }, () -> {
+      Log.d(mTag, "init() -> Failed executeOnFailure: " + format(getLastResult()));
+      callError(Constants.ERR_SETUP,
+          "executeOnFailure failed. " + format(getLastResult()));
+  });
   }
 
   private void getPurchases() {
