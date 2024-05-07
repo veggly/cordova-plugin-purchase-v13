@@ -580,7 +580,7 @@ declare namespace CdvPurchase {
             logger: Logger;
             constructor(logger: Logger);
             /** Register a callback to be called when the plugin is ready. */
-            add(cb: Callback<void>): unknown;
+            add(cb: Callback<void>): any;
             /** Calls the ready callbacks */
             trigger(reason: string): void;
             remove(cb: Callback<void>): void;
@@ -2420,14 +2420,14 @@ declare namespace CdvPurchase {
             forceReceiptReload: boolean;
             /** List of products loaded from AppStore */
             _products: SKProduct[];
-            products(): Product[];
+            products: Product[];
             /** Find a given product from ID */
             getProduct(id: string): SKProduct | undefined;
             /** The application receipt, contains all transactions */
             _receipt?: SKApplicationReceipt;
             /** The pseudo receipt stores purchases in progress */
             pseudoReceipt: Receipt;
-            receipts(): Receipt[];
+            receipts: Receipt[];
             private validProducts;
             addValidProducts(registerProducts: IRegisterProduct[], validProducts: Bridge.ValidProduct[]): void;
             bridge: Bridge.Bridge;
@@ -2443,7 +2443,7 @@ declare namespace CdvPurchase {
             onRestoreCompleted?: (code: IError | undefined) => void;
             constructor(context: CdvPurchase.Internal.AdapterContext, options: AdapterOptions);
             /** Returns true on iOS, the only platform supported by this adapter */
-            isSupported(): boolean;
+            isSupported: boolean;
             private upsertTransactionInProgress;
             /** Remove a transaction from the pseudo receipt */
             private removeTransactionInProgress;
@@ -3242,14 +3242,14 @@ declare namespace CdvPurchase {
             ready: boolean;
             products: Product[];
             _receipts: BraintreeReceipt[];
-            receipts(): Receipt[];
+            receipts: Receipt[];
             private context;
             log: Logger;
             iosBridge?: IosBridge.Bridge;
             androidBridge?: AndroidBridge.Bridge;
             options: AdapterOptions;
             constructor(context: Internal.AdapterContext, options: AdapterOptions);
-            isSupported(): boolean;
+            isSupported: boolean;
             supportsParallelLoading: boolean;
             /**
              * Initialize the Braintree Adapter.
@@ -4171,9 +4171,9 @@ declare namespace CdvPurchase {
             ready: boolean;
             supportsParallelLoading: boolean;
             /** List of products managed by the GooglePlay adapter */
-            products(): GProduct[];
+            products: GProduct[];
             private _products;
-            receipts(): Receipt[];
+            receipts: Receipt[];
             private _receipts;
             /** The GooglePlay bridge */
             bridge: Bridge.Bridge;
@@ -4189,7 +4189,7 @@ declare namespace CdvPurchase {
             constructor(context: Internal.AdapterContext, autoRefreshIntervalMillis?: number);
             private initializationPromise?;
             /** Returns true on Android, the only platform supported by this adapter */
-            isSupported(): boolean;
+            isSupported: boolean;
             initialize(): Promise<undefined | IError>;
             /** Prepare the list of SKUs sorted by type */
             getSkusOf(products: IRegisterProduct[]): {
@@ -4666,11 +4666,11 @@ declare namespace CdvPurchase {
             /** The reason the user selected in the cancel survey. */
             export type CancelSurveyReason = "CANCEL_SURVEY_REASON_UNSPECIFIED" | "CANCEL_SURVEY_REASON_NOT_ENOUGH_USAGE" | "CANCEL_SURVEY_REASON_TECHNICAL_ISSUES" | "CANCEL_SURVEY_REASON_COST_RELATED" | "CANCEL_SURVEY_REASON_FOUND_BETTER_APP" | "CANCEL_SURVEY_REASON_OTHERS";
             /** Information specific to cancellations initiated by Google system. */
-            export type SystemInitiatedCancellation = unknown;
+            export type SystemInitiatedCancellation = any;
             /** Information specific to cancellations initiated by developers. */
-            export type DeveloperInitiatedCancellation = unknown;
+            export type DeveloperInitiatedCancellation = any;
             /** Information specific to cancellations caused by subscription replacement. */
-            export type ReplacementCancellation = unknown;
+            export type ReplacementCancellation = any;
             /**
              * A SubscriptionPurchase resource indicates the status of a user's subscription purchase.
              */
@@ -4838,7 +4838,7 @@ declare namespace CdvPurchase {
                 allowExtendAfterTime?: string | null;
             }
             /** Whether this subscription purchase is a test purchase. */
-            export type TestPurchase = unknown;
+            export type TestPurchase = any;
             /**
              * Contains the introductory price information for a subscription.
              */
@@ -4993,7 +4993,7 @@ declare namespace CdvPurchase {
             private context;
             private log;
             constructor(context: Internal.AdapterContext);
-            isSupported(): boolean;
+            isSupported: boolean;
             supportsParallelLoading: boolean;
             initialize(): Promise<IError | undefined>;
             loadReceipts(): Promise<Receipt[]>;
@@ -5132,7 +5132,7 @@ declare namespace CdvPurchase {
             products: Product[];
             receipts: Receipt[];
             initialize(): Promise<IError | undefined>;
-            isSupported(): boolean;
+            isSupported: boolean;
             loadProducts(products: IRegisterProduct[]): Promise<(Product | IError)[]>;
             loadReceipts(): Promise<Receipt[]>;
             order(offer: Offer): Promise<undefined | IError>;
@@ -5291,7 +5291,7 @@ declare namespace CdvPurchase {
          *
          * @internal
          */
-        function callExternal<F extends Function = Function>(log: Logger, name: string, callback: F | undefined, ...args: any): void;
+        function callExternal<F extends Function = Function>(log: Logger, name: string, callback: F | undefined, ...args: any[]): void;
     }
 }
 declare namespace CdvPurchase {
